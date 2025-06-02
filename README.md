@@ -19,18 +19,6 @@ A simple and responsive PHP Guestbook web app with pastel-themed styling and dar
 - JavaScript (for dark mode)
 - No database – entries stored in a `.txt` file
 
-## 📁 Project Structure
-
-guestbook/
-├── index.php
-├── guestbook.txt
-├── includes/
-│ ├── header.php
-│ ├── footer.php
-│ └── functions.php
-├── css/
-│ └── style.css
-
 ## 🚀 How to Run
 
 1. Make sure you have PHP installed (e.g., via [XAMPP](https://www.apachefriends.org/) or [MAMP](https://www.mamp.info/)).
