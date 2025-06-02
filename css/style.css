@@ -1,0 +1,251 @@
+:root {
+    --bg-color: #fefefe;
+    --text-color: #333;
+    --accent-color: #a3d5ff;
+    --border-color: #ccc;
+    --form-bg: #ffffff;
+    --button-bg: #a3d5ff;
+    --button-hover: #90caff;
+    --entry-bg: #ffffff;
+    --entry-hover-bg: #f0f8ff;
+    --search-border: #ccc;
+    --search-bg: #fff;
+    --pagination-bg: #fff;
+    --pagination-border: #ccc;
+    --pagination-hover: #a3d5ff;
+}
+
+body.dark {
+    --bg-color: #1e1e2f;
+    --text-color: #eaeaea;
+    --accent-color: #ffb3c6;
+    --border-color: #444;
+    --form-bg: #2c2c3a;
+    --button-bg: #ffb3c6;
+    --button-hover: #ff9fb6;
+    --entry-bg: #2c2c3a;
+    --entry-hover-bg: #3a3a4a;
+    --search-border: #555;
+    --search-bg: #2c2c3a;
+    --pagination-bg: #2c2c3a;
+    --pagination-border: #555;
+    --pagination-hover: #ffb3c6;
+}
+
+/* --- GLOBAL STYLES --- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ===== DARK MODE TOGGLE BUTTON ===== */
+#dark-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--button-bg);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s, transform 0.2s;
+}
+#dark-toggle:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.1);
+}
+
+h1 {
+    text-align: center;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+/* ===== FORMS ===== */
+form {
+    background-color: var(--form-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    max-width: 500px;
+    margin: 0 auto 20px;
+    transition: background-color 0.3s;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #fff;
+    color: var(--text-color);
+    transition: border-color 0.3s;
+}
+input[type="text"]:focus,
+textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+
+form input[type="submit"] {
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+form input[type="submit"]:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.05);
+}
+
+/* ===== SEARCH FORM ===== */
+.search-form {
+    max-width: 500px;
+    display: flex;
+    align-items: stretch; 
+    gap: 0;
+    border: none;
+    overflow: hidden; 
+    background: var(--search-bg);
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    height: 40px;
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.search-form input[type="text"]:focus {
+    border: none;
+    outline: none;
+}
+
+.search-form input[type="submit"] {
+    background-color: var(--button-bg);
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    height: 40px;
+    padding: 0 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1rem;
+    border-left: 1px solid var(--search-border);
+}
+
+.search-form input[type="submit"]:hover {
+    background-color: var(--button-hover);
+}
+
+/* ===== ENTRY CARDS ===== */
+.entry {
+    background-color: var(--entry-bg);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    transition: background-color 0.3s, opacity 0.3s;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Hover effect for each entry */
+.entry:hover {
+    background-color: var(--entry-hover-bg);
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.page-link {
+    margin: 0 10px;
+    text-decoration: none;
+    padding: 6px 12px;
+    background-color: var(--pagination-bg);
+    border: 1px solid var(--pagination-border);
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    color: var(--text-color);
+}
+.page-link:hover {
+    background-color: var(--pagination-hover);
+    color: #000;
+}
+.page-info {
+    margin: 0 10px;
+}
+
+/* ===== MESSAGE BOX (error/success) ===== */
+.message {
+    max-width: 500px;
+    margin: 10px auto;
+    padding: 12px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+}
+.message.error {
+    background-color: #ffe5e5;
+    color: #d32f2f;
+    border: 1px solid #f5a9a9;
+}
+.message.success {
+    background-color: #e5ffe5;
+    color: #388e3c;
+    border: 1px solid #a9f5a9;
+}
+
+/* ===== RESPONSIVE FOR TABLETS (max-width: 768px) ===== */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    form, .search-form, .entries-container, .message {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
