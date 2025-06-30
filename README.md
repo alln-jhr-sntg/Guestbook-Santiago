@@ -48,11 +48,11 @@ Will be available in the future.
 - This is a file-based project, not suitable for production as-is.
 - No sanitization or CAPTCHA added yet – it’s best used as a learning tool.
 - This project is now fully backed by MySQL, offering better scalability and security.
--You can extend this system by adding:
-    Input validation
-    User login system
-    Admin panel for managing entries
-    Pagination and filtering
+- You can extend this system by adding:
+    ###Input validation
+    ###User login system
+    ###Admin panel for managing entries
+    ###Pagination and filtering
 
 ## 📜 License
 
