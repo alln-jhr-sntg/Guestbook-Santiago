@@ -1,16 +1,23 @@
 # Allen Jheru Santiago (22013022410)- PHP Guestbook
 
-A simple and responsive PHP Guestbook web app with pastel-themed styling and dark mode support. Users can leave messages, view past entries, and toggle between light and dark modes. Built as a hands-on web development project.
+A PHP-based guestbook web application powered by **MySQL** and running on **XAMPP**. This system allows users to post, edit, and delete entries stored securely in a database. The project demonstrates core PHP + MySQL development using modular includes and CRUD operations.
 
-## 🌟 Features
+## 🚀 What's New in This Version
 
-- ✅ Submit guestbook entries with a name and message
-- ✅ Displays all previous entries
-- ✅ Dark mode toggle
-- ✅ Search bar to filter entries
-- ✅ Responsive design (optimized for tablets)
-- ✅ Styled with soft pastel colors
-- ✅ Animated entry cards and feedback messages
+- ✨ **Database Integration**:
+  - Switched from text file storage to **MySQL database**.
+  - Guest entries are now securely stored and retrieved using SQL queries.
+
+- ✨ **New Features**:
+  - `edit.php`: Users can now **edit** guestbook entries directly from the interface.
+  - `delete.php`: Users can **delete** entries with confirmation.
+  - `nav.php`: Modular navigation bar added for a cleaner UI.
+  - `config.php`: Centralized database configuration for scalability.
+
+- 🔧 **Improvements**:
+  - Improved layout and organization in `index.php`.
+  - Updated styles in `css/style.css`.
+  - Modular includes for cleaner, reusable code (`header.php`, `footer.php`, `functions.php`).
 
 ## 🛠 Technologies Used
 
@@ -21,17 +28,16 @@ A simple and responsive PHP Guestbook web app with pastel-themed styling and dar
 
 ## 🚀 How to Run
 
-1. Make sure you have PHP installed (e.g., via [XAMPP](https://www.apachefriends.org/) or [MAMP](https://www.mamp.info/)).
-2. Place the project folder inside your local server directory:
+1. Place the project folder inside your local server directory:
    - For XAMPP: `htdocs/guestbook`
-3. Start Apache in your local server.
-4. Open your browser and go to:
-http://localhost:8000
-5. Try adding entries and toggling dark mode!
+2. Import the SQL structure into phpMyAdmin or your MySQL client.
+3. Set your database credentials in config.php.
+4. Start Apache and MySQL using XAMPP Control Panel.
+5. Open your browser and go to http://localhost/Guestbook-Santiago/index.php
 
-## 💾 Data Storage
+## 💾 Data Storage (MySQL)
 
-All guestbook entries are stored in a plain text file named `guestbook.txt`. Each entry includes a name, message, and timestamp.
+Guestbook entries are stored in a **MySQL database**. 
 
 ## 📷 Screenshots
 
@@ -41,6 +47,12 @@ Will be available in the future.
 
 - This is a file-based project, not suitable for production as-is.
 - No sanitization or CAPTCHA added yet – it’s best used as a learning tool.
+- This project is now fully backed by MySQL, offering better scalability and security.
+-You can extend this system by adding:
+   1. Input validation
+   2. User login system
+   3. Admin panel for managing entries
+   4. Pagination and filtering
 
 ## 📜 License
 
