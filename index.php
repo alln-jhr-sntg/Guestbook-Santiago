@@ -1,125 +1,102 @@
 <?php
-    if (file_exists("includes/functions.php")) {
-        include "includes/functions.php";
+require 'config.php'; //db connection
+
+// for pdo error
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name    = trim($_POST['name']    ?? '');
+    $message = trim($_POST['message'] ?? '');
+
+    if ($name !== '' && $message !== '') {
+        $stmt = $conn->prepare("
+            INSERT INTO entries (name, message)
+            VALUES (:name, :message)
+        ");
+        $stmt->execute([
+            ':name'    => $name,
+            ':message' => $message,
+        ]);
+        // redirect
+        header('Location: index.php');
+        exit;
     } else {
-        die("Required functions file not found.");
+        $error = "Please fill out both Name and Message.";
     }
-
-// Handle Form Submission
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $name = trim($_POST["name"]);
-        $message = trim($_POST["message"]);
-
-        if ($name && $message) {
-            saveEntry($name, $message);
-            $success = "Thank you for signing the guestbook!";
-        } else {
-            $error = "Both name and message are required.";
-        }
-    }
-
-// Handle Search & Pagination (GET)
-    $q    = trim($_GET['q']    ?? '');
-    $page = max(1, intval($_GET['page'] ?? 1));  // default to page 1
-    $perPage = 5; // show 5 per page
-
-// Get all entries
-    $allBlocks = getAllEntries();
-
-    if ($q !== '') {
-        $filtered = [];
-        foreach ($allBlocks as $block) {
-            if (stripos($block, $q) !== false) {
-                $filtered[] = $block;
-            }
-        }
-    } else {
-        $filtered = $allBlocks;
-    }
-
-    $totalEntries = count($filtered);
-    $totalPages   = max(1, ceil($totalEntries / $perPage));
-
-    if ($page > $totalPages) {
-        $page = $totalPages;
-    }
-
-// Determine which slice of $filtered to display
-    $startIndex = ($page - 1) * $perPage;
-    $blocksToShow = array_slice($filtered, $startIndex, $perPage);
-?>
-
-<?php 
-    if (file_exists("includes/header.php")) {
-        include "includes/header.php";
-    } else {
-        echo("Required header file not found.");
-    }
-?>
-
-<!-- Error/Success Messages -->
-<?php if (!empty($error)): ?>
-  <div class="message error"><?php echo htmlspecialchars($error); ?></div>
-<?php elseif (!empty($success)): ?>
-  <div class="message success"><?php echo htmlspecialchars($success); ?></div>
-<?php endif; ?>
-
-<!-- Sign Guestbook Form -->
-<form method="POST" action="">
-    <label>Name: <input type="text" name="name"></label><br><br>
-    <label>Message: <textarea name="message"></textarea></label><br><br>
-    <input type="submit" value="Submit">
-</form>
-
-<!-- SEARCH FORM (uses GET) -->
-<form method="GET" action="" class="search-form">
-    <input type="submit" value="🔎">
-    <input
-      type="text"
-      name="q"
-      placeholder="Search entries..."
-      value="<?php echo htmlspecialchars($q); ?>"
-    >
-    
-</form>
-
-<h2>Entries (<?php echo $totalEntries; ?> found)</h2>
-
-<div class="entries-container">
-    <?php
-      if ($totalEntries === 0) {
-          echo "<p>No entries to display.</p>";
-      } else {
-          displayEntries($blocksToShow);
-      }
-    ?>
-</div>
-
-<!-- PAGINATION LINKS -->
-<?php if ($totalEntries > $perPage): ?>
-    <div class="pagination">
-        <?php if ($page > 1): ?>
-        <a
-            href="?<?php echo http_build_query(['q' => $q, 'page' => $page - 1]); ?>"
-            class="page-link"
-        >&laquo; Previous</a>
-        <?php endif; ?>
-
-        <span class="page-info">Page <?php echo $page; ?> of <?php echo $totalPages; ?></span>
-
-        <?php if ($page < $totalPages): ?>
-        <a
-            href="?<?php echo http_build_query(['q' => $q, 'page' => $page + 1]); ?>"
-            class="page-link"
-        >Next &raquo;</a>
-        <?php endif; ?>
-    </div>
-<?php endif; ?>
-
-<?php 
-if (file_exists("includes/footer.php")) {
-    include "includes/footer.php";
-} else {
-    echo("Required footer file not found.");
 }
+
+//fetch entries
+$stmt    = $conn->query("SELECT * FROM entries ORDER BY created_at DESC");
+$entries = $stmt->fetchAll();
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Guestbook</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script src="path/to/your-darkmode-toggle.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <?php include __DIR__ . '/includes/header.php'; ?>
+
+    <main class="guestbook-container">
+        
+        <?php if ($error): ?>
+            <div class="error-container">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="post" class="guestbook-form">
+        <h1>Post a Message</h1>
+        <label> Name <input
+                type="text"
+                name="name"
+                placeholder="Your name"
+                value="<?= htmlspecialchars($_POST['name'] ?? '') ?>"
+                required
+            >
+        </label>
+
+        <label> Message <textarea
+                name="message"
+                placeholder="Your message"
+                required
+            ><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
+        </label>
+
+        <button type="submit" class="sign-button">Sign Guestbook</button>
+        </form>
+
+        <hr>
+        <h2>Entries</h2>
+        <p>Share your thoughts with us!</p>
+        <section class="entries-list">
+            <?php if (empty($entries)): ?>
+                <p>No entries yet. Be the first to sign!</p>
+            <?php else: ?>
+                <?php foreach ($entries as $e): ?>
+                    <article class="entry">
+                        <header>
+                        <strong><?= htmlspecialchars($e['name']) ?></strong>
+                        <time datetime="<?= $e['created_at'] ?>">
+                            <?= date('M j, Y — g:ia', strtotime($e['created_at'])) ?>
+                        </time>
+                        </header>
+                        <p><?= nl2br(htmlspecialchars($e['message'])) ?></p>
+                        <footer class="entry-actions">
+                        <a href="edit.php?id=<?= $e['id'] ?>">Edit</a> |
+                        <a href="delete.php?id=<?= $e['id'] ?>" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</a>
+                        </footer>
+                    </article>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </section>
+    </main>
+
+    <?php include __DIR__ . '/includes/footer.php'; ?>
+
+</body>
+</html>
+
