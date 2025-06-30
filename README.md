@@ -49,10 +49,10 @@ Will be available in the future.
 - No sanitization or CAPTCHA added yet – it’s best used as a learning tool.
 - This project is now fully backed by MySQL, offering better scalability and security.
 -You can extend this system by adding:
-   1. Input validation
-   2. User login system
-   3. Admin panel for managing entries
-   4. Pagination and filtering
+    Input validation
+    User login system
+    Admin panel for managing entries
+    Pagination and filtering
 
 ## 📜 License
 
